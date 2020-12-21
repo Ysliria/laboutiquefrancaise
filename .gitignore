@@ -14,3 +14,17 @@
 .phpunit.result.cache
 /phpunit.xml
 ###< symfony/phpunit-bridge ###
+
+.idea/commandlinetools/schemas/frameworkDescriptionVersion1.1.4.xsd
+
+.idea/commandlinetools/Symfony_21_12_2020_07_38.xml
+
+.idea/laboutiquefrancaise.iml
+
+.idea/modules.xml
+
+.idea/php.xml
+
+.idea/vcs.xml
+
+.idea/
