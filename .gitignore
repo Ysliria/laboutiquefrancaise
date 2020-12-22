@@ -28,3 +28,5 @@
 .idea/vcs.xml
 
 .idea/
+
+.env
