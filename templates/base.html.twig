@@ -10,6 +10,7 @@
 
     <!-- Bootstrap core CSS -->
     <link href="{{ asset('assets/css/bootstrap.min.css') }}" rel="stylesheet">
+    <link rel="stylesheet" href="{{ asset('assets/css/boutiquefrancaise.css') }}">
 
     <style>
         .bd-placeholder-img {
@@ -32,32 +33,41 @@
 </head>
 
 <body>
-    <header>
-        <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
-            <a class="navbar-brand" href="#">La boutique française</a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse"
-                    aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
+<header>
+    <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+        <a class="navbar-brand" href="{{ path('home') }}">La boutique française</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse"
+                aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
 
-            <div class="collapse navbar-collapse" id="navbarCollapse">
-                <ul class="navbar-nav mr-auto">
-                    <li class="nav-item active">
-                        <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
-                    </li>
-                </ul>
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="#">Nos produits</a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="#">Qui sommes-nous ?</a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="#">Contact</a>
+                </li>
+            </ul>
 
+            <div class="navbar-item-custom">
                 {% if app.user %}
-                    <a href="{{ path('account') }}">Mon compte</a> | <a href="{{ path('app_logout') }}">Déconnexion</a>
+                    <a href="{{ path('account') }}">Mon compte <small>({{ app.user.firstname }})</small></a> | <a
+                        href="{{ path('app_logout') }}">Déconnexion</a>
                 {% else %}
                     <a href="{{ path('app_login') }}">Connexion</a> | <a href="{{ path('register') }}">Inscription</a>
                 {% endif %}
             </div>
-        </nav>
-    </header>
+        </div>
+    </nav>
+</header>
 
-    <main role="main">
-        {% if block('carousel') is defined %}
+<main role="main">
+    {% if block('carousel') is defined %}
         <div id="myCarousel" class="carousel slide" data-ride="carousel">
             <ol class="carousel-indicators">
                 <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
@@ -69,14 +79,14 @@
                 <div class="carousel-item active">
                     <svg class="bd-placeholder-img" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg"
                          preserveAspectRatio="xMidYMid slice" focusable="false" role="img">
-                        <rect width="100%" height="100%" fill="#777" />
+                        <rect width="100%" height="100%" fill="#777"/>
                     </svg>
 
                     <div class="container">
                         <div class="carousel-caption text-left">
                             <h1>Example headline.</h1>
                             <p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta
-                               gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
+                                gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
                             <p><a class="btn btn-lg btn-primary" href="#" role="button">Sign up today</a></p>
                         </div>
                     </div>
@@ -85,14 +95,14 @@
                 <div class="carousel-item">
                     <svg class="bd-placeholder-img" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg"
                          preserveAspectRatio="xMidYMid slice" focusable="false" role="img">
-                        <rect width="100%" height="100%" fill="#777" />
+                        <rect width="100%" height="100%" fill="#777"/>
                     </svg>
 
                     <div class="container">
                         <div class="carousel-caption">
                             <h1>Another example headline.</h1>
                             <p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta
-                               gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
+                                gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
                             <p><a class="btn btn-lg btn-primary" href="#" role="button">Learn more</a></p>
                         </div>
                     </div>
@@ -101,14 +111,14 @@
                 <div class="carousel-item">
                     <svg class="bd-placeholder-img" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg"
                          preserveAspectRatio="xMidYMid slice" focusable="false" role="img">
-                        <rect width="100%" height="100%" fill="#777" />
+                        <rect width="100%" height="100%" fill="#777"/>
                     </svg>
 
                     <div class="container">
                         <div class="carousel-caption text-right">
                             <h1>One more for good measure.</h1>
                             <p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta
-                               gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
+                                gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
                             <p><a class="btn btn-lg btn-primary" href="#" role="button">Browse gallery</a></p>
                         </div>
                     </div>
@@ -125,24 +135,30 @@
                 <span class="sr-only">Next</span>
             </a>
         </div>
-        {% endif %}
-        <!-- Marketing messaging and featurettes
-        ================================================== -->
-        <!-- Wrap the rest of the page in another container to center all the content. -->
+    {% endif %}
+    <!-- Marketing messaging and featurettes
+    ================================================== -->
+    <!-- Wrap the rest of the page in another container to center all the content. -->
 
-        <div class="container marketing {% if block('carousel') is not defined %}mt-5{% endif %}">
-            {% block content %}
-            {% endblock %}
-        </div><!-- /.container -->
+    <div class="container marketing {% if block('carousel') is not defined %}mt-5{% endif %}">
+        {% block content %}
+        {% endblock %}
+    </div><!-- /.container -->
 
-        <!-- FOOTER -->
-        <footer class="container">
-            <p class="float-right"><a href="#">Back to top</a></p>
-            <p>&copy; 2017-2020 Company, Inc. &middot; <a href="#">Privacy</a> &middot; <a href="#">Terms</a></p>
-        </footer>
-    </main>
+    <!-- FOOTER -->
+    <footer class="footer-custom">
+        <p>
+            &copy; 2017-2020 La Boutique Fançaise <br>
+            <small>
+                La boutique 100% made in france. <br>
+                <a href="#">Privacy</a>
+                <a href="#">Terms</a>
+            </small>
+        </p>
+    </footer>
+</main>
 
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="{{ asset('assets/js/bootstrap.bundle.js') }}"></script>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="{{ asset('assets/js/bootstrap.bundle.js') }}"></script>
 </body>
 </html>
