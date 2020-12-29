@@ -22,7 +22,7 @@ class CartController extends AbstractController
     /**
      * @Route("/cart/add/{id}", name="add_to_cart")
      */
-    public function add(Cart $cart, $id): RedirectResponse
+    public function add(Cart $cart, $id)
     {
         $cart->add($id);
 
@@ -30,9 +30,9 @@ class CartController extends AbstractController
     }
 
     /**
-     * @Route("/cart/remove", mane="remove_my_cart")
+     * @Route("/cart/remove", name="remove_my_cart")
      */
-    public function remove(Cart $cart): RedirectResponse
+    public function remove(Cart $cart)
     {
         $cart->remove();
 
