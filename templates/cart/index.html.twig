@@ -1,20 +1,66 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello CartController!{% endblock %}
+{% block title %}Mon panier - La Boutique Française{% endblock %}
 
-{% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
+{% block content %}
+    <h1>Mon panier</h1>
+    Retouver l'ensemble des produits ajoutés à votre panier
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
+    {% if cart|length > 0 %}
+        <table class="table">
+            <thead>
+            <tr>
+                <th scope="col">Produit</th>
+                <th scope="col"></th>
+                <th scope="col">Quantité</th>
+                <th scope="col">Prix</th>
+                <th scope="col">Total</th>
+                <th scope="col"></th>
+            </tr>
+            </thead>
+            <tbody>
+            {% set total, price = null, null %}
+            {% for product in cart %}
+                <tr>
+                    <th>
+                        <img src="/uploads/{{ product.product.illustration }}" alt="{{ product.product.name }}"
+                             height="75px"><br>
+                    </th>
+                    <td>
+                        {{ product.product.name }}<br>
+                        <small>{{ product.product.subtitle }}</small>
+                    </td>
+                    <td>
+                        <a href="{{ path('decrease_to_cart', {'id': product.product.id}) }}">
+                            <img src="{{ asset('assets/img/minus.png') }}" alt="enlever un produit" height="10px">
+                        </a>
+                        {{ product.quantity }}
+                        <a href="{{ path('add_to_cart', {'id' : product.product.id}) }}">
+                            <img src="{{ asset('assets/img/add.png') }}" alt="ajouter un produit" height="10px">
+                        </a>
+                    </td>
+                    <td>{{ (product.product.price / 100)|number_format(2, ',', '.') }} €</td>
+                    <td>{{ ((product.product.price * product.quantity) / 100)|number_format(2, ',', '.') }} €</td>
+                    <td>
+                        <a href="{{ path('delete_to_cart',  {'id' : product.product.id}) }}">
+                            <img src="{{ asset('assets/img/delete.png') }}" alt="trash" height="20px">
+                        </a>
+                    </td>
+                </tr>
+                {% set total = total + product.quantity %}
+                {% set price = price + (product.product.price * product.quantity) %}
+            {% endfor %}
+            </tbody>
+        </table>
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ 'E:/laragon/www/laboutiquefrancaise/src/Controller/CartController.php'|file_link(0) }}">src/Controller/CartController.php</a></code></li>
-        <li>Your template at <code><a href="{{ 'E:/laragon/www/laboutiquefrancaise/templates/cart/index.html.twig'|file_link(0) }}">templates/cart/index.html.twig</a></code></li>
-    </ul>
-</div>
+        <div class="text-right mb-5">
+            <strong>Nombre de produits :</strong> {{ total }}<br>
+            <strong>Total de mon panier :</strong> {{ (price / 100)|number_format(2, ',', '.') }} €
+            <a href="" class="btn btn-success btn-block mt-3">Valider mon panier</a>
+        </div>
+    {% else %}
+        <div class="alert alert-info" role="alert">
+            Votre panier est vide !
+        </div>
+    {% endif %}
 {% endblock %}
