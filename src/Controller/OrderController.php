@@ -25,17 +25,19 @@ class OrderController extends AbstractController
      */
     public function index(Cart $cart, Request $request)
     {
-        if (!$this->getUser()->getAddresses()->getValues()) {
+        if (!$this->getUser()
+                  ->getAddresses()
+                  ->getValues()) {
             return $this->redirectToRoute('account_address_add');
         }
 
         $form = $this->createForm(OrderType::class, null, [
-            'user' => $this->getUser()
+            'user' => $this->getUser(),
         ]);
 
         return $this->render('order/index.html.twig', [
             'form' => $form->createView(),
-            'cart' => $cart->getFull()
+            'cart' => $cart->getFull(),
         ]);
     }
 
@@ -45,15 +47,17 @@ class OrderController extends AbstractController
     public function add(Cart $cart, Request $request)
     {
         $form = $this->createForm(OrderType::class, null, [
-            'user' => $this->getUser()
+            'user' => $this->getUser(),
         ]);
 
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $date            = new \DateTime();
-            $carriers        = $form->get('carriers')->getData();
-            $delivery        = $form->get('addresses')->getData();
+            $carriers        = $form->get('carriers')
+                                    ->getData();
+            $delivery        = $form->get('addresses')
+                                    ->getData();
             $deliveryContent = $delivery->getFirstname() . ' ' . $delivery->getLastname();
             $deliveryContent .= '<br>' . $delivery->getPhone();
 
@@ -90,12 +94,12 @@ class OrderController extends AbstractController
                 $this->entityManager->persist($orderDetails);
             }
 
-             $this->entityManager->flush();
+//            $this->entityManager->flush();
 
             return $this->render('order/add.html.twig', [
-                'cart'     => $cart->getFull(),
-                'carrier'  => $carriers,
-                'delivery' => $deliveryContent
+                'cart'                    => $cart->getFull(),
+                'carrier'                 => $carriers,
+                'delivery'                => $deliveryContent
             ]);
         }
 

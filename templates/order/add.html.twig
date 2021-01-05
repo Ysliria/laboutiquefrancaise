@@ -1,5 +1,9 @@
 {% extends 'base.html.twig' %}
 
+{% block javascript %}
+<script src="https://js.stripe.com/v3/"></script>
+{% endblock %}
+
 {% block title %}Récapitulatif de ma commande - La Boutique Française{% endblock %}
 
 {% block content %}
@@ -70,7 +74,36 @@
 
             <strong>Total : </strong>{{ (carrier.price + (price / 100))|number_format(2, ',', '.') }} €
 
-            <a href="" class="btn btn-success btn-block mt-3">Payer {{ (carrier.price + (price / 100))|number_format(2, ',', '.') }} €</a>
+            <a id="checkout-button"
+               class="btn btn-success btn-block mt-3">Payer {{ (carrier.price + (price / 100))|number_format(2, ',', '.') }}
+                                                      €</a>
         </div>
     </div>
+{% endblock %}
+
+{% block script %}
+    <script type="text/javascript">
+        var stripe         = Stripe('pk_test_51I5nGIHP4MlDkgKUa5TxgJuSEOUsKvdSrfuKCnD4hhDuEdthYgyApcg3I6fhjpdpCaXtM5KkNfT6MOpRHcWcLBDH00pfB534rW');
+        var checkoutButton = document.getElementById('checkout-button');
+
+        checkoutButton.addEventListener('click', function () {
+            fetch('/commande/create-session', {
+                method: 'POST',
+            })
+                .then(function (response) {
+                    return response.json();
+                })
+                .then(function (session) {
+                    return stripe.redirectToCheckout({sessionId: session.id});
+                })
+                .then(function (result) {
+                    if (result.error) {
+                        alert(result.error.message);
+                    }
+                })
+                .catch(function (error) {
+                    console.error('Error:', error);
+                });
+        });
+    </script>
 {% endblock %}
