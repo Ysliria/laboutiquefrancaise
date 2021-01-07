@@ -68,14 +68,14 @@
 
             <strong>Sous-total : </strong>{{ (price / 100)|number_format(2, ',', '.') }} €
             <br>
-            <strong>Livraison : </strong>{{ carrier.price|number_format(2, ',', '.') }} €
+            <strong>Livraison : </strong>{{ (carrier.price / 100)|number_format(2, ',', '.') }} €
 
             <hr>
 
-            <strong>Total : </strong>{{ (carrier.price + (price / 100))|number_format(2, ',', '.') }} €
+            <strong>Total : </strong>{{ ((carrier.price / 100) + (price / 100))|number_format(2, ',', '.') }} €
 
             <a id="checkout-button"
-               class="btn btn-success btn-block mt-3">Payer {{ (carrier.price + (price / 100))|number_format(2, ',', '.') }}
+               class="btn btn-success btn-block mt-3">Payer {{ ((carrier.price / 100) + (price / 100))|number_format(2, ',', '.') }}
                                                       €</a>
         </div>
     </div>
