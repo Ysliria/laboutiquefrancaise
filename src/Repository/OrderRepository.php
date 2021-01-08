@@ -19,6 +19,20 @@ class OrderRepository extends ServiceEntityRepository
         parent::__construct($registry, Order::class);
     }
 
+    /**
+     * Permet de récupérer les commandes payées de l'utilisateur de la plus à la moins récente
+     */
+    public function findSuccessOrders($user)
+    {
+        return $this->createQueryBuilder('o')
+            ->andWhere('o.isPaid = 1')
+            ->andWhere('o.user = :user')
+            ->setParameter('user', $user)
+            ->orderBy('o.id', 'DESC')
+            ->getQuery()
+            ->getResult();
+    }
+
     // /**
     //  * @return Order[] Returns an array of Order objects
     //  */
