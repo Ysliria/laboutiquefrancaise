@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Erreur - La Boutique Française{% endblock %}
+
+{% block content %}
+    <div class="block-small">
+        <h2>Erreur</h2>
+
+        <p>
+            Désolé une erreur est survenue.
+        </p>
+
+        <a href="{{ path('home') }}" class="btn btn-info">Revenir à l'accueil</a>
+    </div>
+{% endblock %}
